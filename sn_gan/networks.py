@@ -1,8 +1,12 @@
 from typing import Optional
 import torch
 from torch import nn
-from .sn_modules import SNConv2d, SNLinear
 from typing import List, Tuple
+
+try:
+    from sn_modules import SNConv2d, SNLinear
+except ModuleNotFoundError:
+    from .sn_modules import SNConv2d, SNLinear
 
 
 class Reshape(nn.Module):
@@ -204,21 +208,6 @@ class PerceptualDiscriminator(SNDiscriminator):
                 features.append(x)
         
         return x, features
-
-
-class MixupDiscriminator(PerceptualDiscriminator):
-    def __init__(self, in_channels: int, base_channels: int = 64, num_blocks: List[int] = [1, 1, 1, 1]) -> None:
-        super().__init__(in_channels, base_channels, num_blocks)
-    
-    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, List[torch.Tensor]]:
-        features = []
-
-        for layer in self.net:
-            x = layer(x)
-            if self.is_for_perception_loss(layer):
-                features.append(x)
-        
-        return torch.sigmoid(x), features
 
 
 if __name__ == '__main__':
