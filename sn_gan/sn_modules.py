@@ -8,37 +8,6 @@ from numpy.linalg import svd
 DEFAULT_DTYPE = torch.float32
 
 
-class PseudoSobel(nn.Module):
-    max: float = 9784.5752
-    mean: float = 5569.9180
-    '''
-        pseudosobel norm value on clean dataset of:
-            - median: 5465.4941
-            - mean: 5569.9180
-            - maximum: 9784.5752
-
-        with Scharr filters
-        Pseudo sobel as its class forwards square of approximated image gradients
-        in order to have more significant difference between generations and clean dataset examples during training
-    '''
-    def __init__(self):
-        super().__init__()
-        self.filter = nn.Conv2d(in_channels=1, out_channels=2, kernel_size=3, stride=1, padding=0, bias=False)
-
-        Gx = torch.tensor([[3.0, 0.0, -3.0], [10.0, 0.0, -10.0], [3.0, 0.0, -3.0]])
-        Gy = torch.tensor([[3.0, 10.0, 3.0], [0.0, 0.0, 0.0], [-3.0, -10.0, -3.0]])
-        G = torch.cat([Gx.unsqueeze(0), Gy.unsqueeze(0)], 0)
-        G = G.unsqueeze(1)
-        self.filter.weight = nn.Parameter(G, requires_grad=False)
-
-    def forward(self, img: torch.Tensor) -> torch.Tensor:
-        x = self.filter(img)
-        x = torch.mul(x, x)
-        x = torch.sum(x, dim=1, keepdim=True)
-        # x = torch.sqrt(x)
-        return x
-
-
 def l2_normalize(x: torch.Tensor, eps=1e-12):
     return x / (x.pow(2).sum() + eps).sqrt()
 
