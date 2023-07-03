@@ -1,4 +1,4 @@
-## Realized architectures for Adversarial Training (mostly GANs)
+## Realized architectures for Adversarial Training (mostly GANs) on the basis of PyTorch
 
 Each folder is isolated and it can be putted as an appropriate part in a pipeline
 
