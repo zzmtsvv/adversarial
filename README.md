@@ -8,3 +8,4 @@ Each folder is isolated and "self-sufficient", they can be putted as an appropri
 * [Wasserstein GAN](https://arxiv.org/abs/1701.07875) [[Folder with code]](https://github.com/zzmtsvv/adversarial/tree/main/wasserstein)
 * [Sobolev GAN](https://arxiv.org/abs/1711.04894) [[Folder with code]](https://github.com/zzmtsvv/adversarial/tree/main/sobolev_gan)
 * [Adversarial Autoencoder](https://arxiv.org/abs/1511.05644) [[Folder with code]](https://github.com/zzmtsvv/adversarial/tree/main/adversarial_autoencoder)
+* [Least Squares GAN (LSGAN)](https://arxiv.org/abs/1611.04076) [[Folder with code]](https://github.com/zzmtsvv/adversarial/tree/main/ls_gan)
